@@ -89,7 +89,7 @@ const OurFeatures = () => {
                   solutions that are engaging, intuitive, and innovative. We
                   capture the essence of your business through a blend of
                   essential design patterns and sophisticated technology,
-                  ensuring your digital presence is not just functional, but
+                  ensuring your digital presence is not just functional, its
                   exceptional.
                 </p>
               </div>
