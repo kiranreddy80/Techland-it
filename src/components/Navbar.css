@@ -1,0 +1,88 @@
+/* Mobile Navbar Custom Overrides */
+
+/* Ensure submenus work with React state */
+.th-mobile-menu .sub-menu {
+  display: none !important;
+  padding-left: 0;
+  background-color: #f9f9f9;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.th-mobile-menu .sub-menu li {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.th-mobile-menu .sub-menu li a {
+  padding-left: 40px !important;
+  font-size: 14px;
+  color: #555 !important;
+}
+
+.th-mobile-menu .menu-item-has-children.open > .sub-menu,
+.th-mobile-menu .sub-menu.open,
+.th-mobile-menu .sub-menu.active-service-item {
+  display: block !important;
+  max-height: 1000px;
+}
+
+/* Dropdown arrow for menu items with children */
+.th-mobile-menu .menu-item-has-children > a::after {
+  content: "\f107";
+  font-family: "Font Awesome 5 Pro";
+  margin-left: 5px;
+  transition: transform 0.3s ease;
+  float: right;
+  font-weight: 300;
+}
+
+.th-mobile-menu .menu-item-has-children.open > a::after {
+  transform: rotate(180deg);
+}
+
+/* Ensure menu is scrollable */
+.allow-natural-scroll {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ==========================================================================
+   Desktop Menu Overrides
+   ========================================================================== */
+
+/* Replace default hover icon with Favicon in submenu items */
+@media (min-width: 1200px) {
+  .main-menu ul.sub-menu li a:before {
+    content: "" !important; /* Remove font icon code */
+    background-image: url("/assets/favicon.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 20px;
+    height: 20px;
+    top: 50% !important;
+    left: 10px; /* Hidden initially */
+    transform: translateY(-50%);
+    font-family: inherit !important;
+    /* Maintain existing transition/opacity from style.css */
+  }
+
+  /* Ensure the icon becomes visible on hover */
+  .main-menu ul.sub-menu li a:hover:before {
+    left: 0 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+}
+
+/* Active states for specific requested page */
+.active-service-item {
+  color: var(--theme-color) !important;
+  padding-left: 23px !important;
+}
+
+.active-service-item:before {
+  visibility: visible !important;
+  opacity: 1 !important;
+  left: 0 !important;
+}

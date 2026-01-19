@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Advanced 3D Snow Effect Demo - Tech Land</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(
+          135deg,
+          #1e3c72 0%,
+          #2a5298 50%,
+          #7e22ce 100%
+        );
+        min-height: 100vh;
+        overflow-x: hidden;
+        position: relative;
+      }
+
+      .demo-container {
+        position: relative;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 20px;
+        z-index: 1;
+      }
+
+      .content {
+        text-align: center;
+        color: white;
+        z-index: 10;
+        position: relative;
+        max-width: 800px;
+      }
+
+      h1 {
+        font-size: 4em;
+        margin-bottom: 20px;
+        text-shadow: 0 0 20px rgba(255, 255, 255, 0.5),
+          0 0 40px rgba(173, 216, 230, 0.3);
+        animation: titleGlow 3s ease-in-out infinite;
+      }
+
+      @keyframes titleGlow {
+        0%,
+        100% {
+          text-shadow: 0 0 20px rgba(255, 255, 255, 0.5),
+            0 0 40px rgba(173, 216, 230, 0.3);
+        }
+        50% {
+          text-shadow: 0 0 30px rgba(255, 255, 255, 0.8),
+            0 0 60px rgba(173, 216, 230, 0.6), 0 0 80px rgba(135, 206, 250, 0.4);
+        }
+      }
+
+      .subtitle {
+        font-size: 1.5em;
+        margin-bottom: 30px;
+        opacity: 0.9;
+      }
+
+      .features {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        margin-top: 40px;
+      }
+
+      .feature-card {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 15px;
+        padding: 25px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .feature-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
+      }
+
+      .feature-icon {
+        font-size: 3em;
+        margin-bottom: 10px;
+      }
+
+      .feature-title {
+        font-size: 1.2em;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+
+      .feature-desc {
+        font-size: 0.9em;
+        opacity: 0.8;
+      }
+
+      /* Advanced 3D Snow Effect with Multiple Layers */
+      @keyframes snowfall3D {
+        0% {
+          transform: translateY(-10vh) translateX(0) translateZ(0) rotateZ(0deg);
+          opacity: 0;
+        }
+        5% {
+          opacity: 1;
+        }
+        95% {
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(110vh) translateX(var(--drift-x))
+            translateZ(var(--drift-z)) rotateZ(360deg);
+          opacity: 0;
+        }
+      }
+
+      @keyframes snowfallWind {
+        0% {
+          transform: translateY(-10vh) translateX(0) rotateZ(0deg) scale(1);
+          opacity: 0;
+        }
+        5% {
+          opacity: 1;
+        }
+        25% {
+          transform: translateY(25vh) translateX(50px) rotateZ(90deg) scale(1.1);
+        }
+        50% {
+          transform: translateY(50vh) translateX(-30px) rotateZ(180deg)
+            scale(0.9);
+        }
+        75% {
+          transform: translateY(75vh) translateX(40px) rotateZ(270deg)
+            scale(1.05);
+        }
+        95% {
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(110vh) translateX(-20px) rotateZ(360deg)
+            scale(1);
+          opacity: 0;
+        }
+      }
+
+      @keyframes snowfallSlow {
+        0% {
+          transform: translateY(-10vh) translateX(0) rotate(0deg);
+          opacity: 0;
+        }
+        10% {
+          opacity: 0.9;
+        }
+        90% {
+          opacity: 0.9;
+        }
+        100% {
+          transform: translateY(110vh) translateX(var(--drift-slow))
+            rotate(180deg);
+          opacity: 0;
+        }
+      }
+
+      @keyframes snowGlow {
+        0%,
+        100% {
+          filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.8))
+            drop-shadow(0 0 6px rgba(173, 216, 230, 0.6));
+        }
+        50% {
+          filter: drop-shadow(0 0 8px rgba(255, 255, 255, 1))
+            drop-shadow(0 0 12px rgba(173, 216, 230, 0.9));
+        }
+      }
+
+      @keyframes snowTwirl {
+        0% {
+          transform: translateY(-10vh) translateX(0) rotate(0deg) scale(0.8);
+          opacity: 0;
+        }
+        10% {
+          opacity: 1;
+        }
+        50% {
+          transform: translateY(50vh) translateX(var(--twirl-x)) rotate(720deg)
+            scale(1.2);
+        }
+        90% {
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(110vh) translateX(0) rotate(1080deg) scale(0.8);
+          opacity: 0;
+        }
+      }
+
+      .hero-snow-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        pointer-events: none;
+        z-index: 5;
+        perspective: 1000px;
+      }
+
+      .snow-layer {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      .snow-layer-1 {
+        z-index: 3;
+        filter: blur(0px);
+      }
+
+      .snow-layer-2 {
+        z-index: 2;
+        filter: blur(1px);
+        opacity: 0.7;
+      }
+
+      .snow-layer-3 {
+        z-index: 1;
+        filter: blur(2px);
+        opacity: 0.5;
+      }
+
+      .snowflake {
+        position: absolute;
+        top: -10vh;
+        color: #fff;
+        font-size: 1em;
+        opacity: 0.9;
+        will-change: transform, opacity;
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.8),
+          0 0 20px rgba(173, 216, 230, 0.6), 0 0 30px rgba(135, 206, 250, 0.4);
+      }
+
+      /* Layer 1 - Close snowflakes (large, slow) */
+      .snow-layer-1 .snowflake:nth-child(1) {
+        left: 8%;
+        --drift-x: 80px;
+        --drift-z: 100px;
+        animation: snowfall3D 15s linear infinite;
+        animation-delay: 0s;
+        font-size: 2em;
+      }
+      .snow-layer-1 .snowflake:nth-child(2) {
+        left: 25%;
+        --drift-slow: -60px;
+        animation: snowfallSlow 18s linear infinite;
+        animation-delay: 2s;
+        font-size: 1.8em;
+      }
+      .snow-layer-1 .snowflake:nth-child(3) {
+        left: 42%;
+        animation: snowfallWind 16s ease-in-out infinite;
+        animation-delay: 1s;
+        font-size: 2.2em;
+      }
+      .snow-layer-1 .snowflake:nth-child(4) {
+        left: 58%;
+        --twirl-x: 100px;
+        animation: snowTwirl 17s linear infinite;
+        animation-delay: 3s;
+        font-size: 1.9em;
+      }
+      .snow-layer-1 .snowflake:nth-child(5) {
+        left: 75%;
+        --drift-x: -90px;
+        --drift-z: 80px;
+        animation: snowfall3D 19s linear infinite;
+        animation-delay: 1.5s;
+        font-size: 2.1em;
+      }
+      .snow-layer-1 .snowflake:nth-child(6) {
+        left: 90%;
+        --drift-slow: 70px;
+        animation: snowfallSlow 20s linear infinite;
+        animation-delay: 0.5s;
+        font-size: 1.7em;
+      }
+
+      /* Layer 2 - Medium snowflakes (medium size, medium speed) */
+      .snow-layer-2 .snowflake:nth-child(1) {
+        left: 5%;
+        --drift-x: 60px;
+        --drift-z: 50px;
+        animation: snowfall3D 12s linear infinite;
+        animation-delay: 0.3s;
+        font-size: 1.4em;
+      }
+      .snow-layer-2 .snowflake:nth-child(2) {
+        left: 15%;
+        animation: snowfallWind 13s ease-in-out infinite;
+        animation-delay: 1.2s;
+        font-size: 1.2em;
+      }
+      .snow-layer-2 .snowflake:nth-child(3) {
+        left: 28%;
+        --drift-slow: -50px;
+        animation: snowfallSlow 14s linear infinite;
+        animation-delay: 2.1s;
+        font-size: 1.3em;
+      }
+      .snow-layer-2 .snowflake:nth-child(4) {
+        left: 38%;
+        --twirl-x: -70px;
+        animation: snowTwirl 11s linear infinite;
+        animation-delay: 0.8s;
+        font-size: 1.5em;
+      }
+      .snow-layer-2 .snowflake:nth-child(5) {
+        left: 52%;
+        --drift-x: -55px;
+        --drift-z: 60px;
+        animation: snowfall3D 13s linear infinite;
+        animation-delay: 1.7s;
+        font-size: 1.1em;
+      }
+      .snow-layer-2 .snowflake:nth-child(6) {
+        left: 65%;
+        animation: snowfallWind 15s ease-in-out infinite;
+        animation-delay: 2.5s;
+        font-size: 1.4em;
+      }
+      .snow-layer-2 .snowflake:nth-child(7) {
+        left: 78%;
+        --drift-slow: 65px;
+        animation: snowfallSlow 12s linear infinite;
+        animation-delay: 0.9s;
+        font-size: 1.2em;
+      }
+      .snow-layer-2 .snowflake:nth-child(8) {
+        left: 88%;
+        --twirl-x: 80px;
+        animation: snowTwirl 14s linear infinite;
+        animation-delay: 3.2s;
+        font-size: 1.3em;
+      }
+      .snow-layer-2 .snowflake:nth-child(9) {
+        left: 95%;
+        --drift-x: 45px;
+        --drift-z: 40px;
+        animation: snowfall3D 16s linear infinite;
+        animation-delay: 1.1s;
+        font-size: 1.5em;
+      }
+
+      /* Layer 3 - Far snowflakes (small, fast) */
+      .snow-layer-3 .snowflake:nth-child(1) {
+        left: 3%;
+        --drift-x: 30px;
+        --drift-z: 20px;
+        animation: snowfall3D 8s linear infinite;
+        animation-delay: 0s;
+        font-size: 0.7em;
+      }
+      .snow-layer-3 .snowflake:nth-child(2) {
+        left: 12%;
+        animation: snowfallWind 9s ease-in-out infinite;
+        animation-delay: 0.5s;
+        font-size: 0.6em;
+      }
+      .snow-layer-3 .snowflake:nth-child(3) {
+        left: 20%;
+        --drift-slow: -35px;
+        animation: snowfallSlow 10s linear infinite;
+        animation-delay: 1.2s;
+        font-size: 0.8em;
+      }
+      .snow-layer-3 .snowflake:nth-child(4) {
+        left: 30%;
+        --twirl-x: -40px;
+        animation: snowTwirl 7s linear infinite;
+        animation-delay: 1.8s;
+        font-size: 0.7em;
+      }
+      .snow-layer-3 .snowflake:nth-child(5) {
+        left: 40%;
+        --drift-x: -25px;
+        --drift-z: 30px;
+        animation: snowfall3D 9s linear infinite;
+        animation-delay: 0.7s;
+        font-size: 0.6em;
+      }
+      .snow-layer-3 .snowflake:nth-child(6) {
+        left: 48%;
+        animation: snowfallWind 8s ease-in-out infinite;
+        animation-delay: 2.3s;
+        font-size: 0.8em;
+      }
+      .snow-layer-3 .snowflake:nth-child(7) {
+        left: 56%;
+        --drift-slow: 40px;
+        animation: snowfallSlow 11s linear infinite;
+        animation-delay: 1.5s;
+        font-size: 0.7em;
+      }
+      .snow-layer-3 .snowflake:nth-child(8) {
+        left: 64%;
+        --twirl-x: 50px;
+        animation: snowTwirl 9s linear infinite;
+        animation-delay: 0.3s;
+        font-size: 0.6em;
+      }
+      .snow-layer-3 .snowflake:nth-child(9) {
+        left: 72%;
+        --drift-x: 35px;
+        --drift-z: 25px;
+        animation: snowfall3D 10s linear infinite;
+        animation-delay: 2.8s;
+        font-size: 0.8em;
+      }
+      .snow-layer-3 .snowflake:nth-child(10) {
+        left: 82%;
+        animation: snowfallWind 7s ease-in-out infinite;
+        animation-delay: 1.9s;
+        font-size: 0.7em;
+      }
+      .snow-layer-3 .snowflake:nth-child(11) {
+        left: 91%;
+        --drift-slow: -30px;
+        animation: snowfallSlow 8s linear infinite;
+        animation-delay: 0.4s;
+        font-size: 0.6em;
+      }
+      .snow-layer-3 .snowflake:nth-child(12) {
+        left: 97%;
+        --twirl-x: -45px;
+        animation: snowTwirl 10s linear infinite;
+        animation-delay: 2.1s;
+        font-size: 0.8em;
+      }
+
+      /* Glowing snowflakes */
+      .snowflake.glow {
+        animation: snowGlow 3s ease-in-out infinite;
+      }
+
+      @media (max-width: 768px) {
+        h1 {
+          font-size: 2.5em;
+        }
+        .subtitle {
+          font-size: 1.2em;
+        }
+        .features {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Advanced 3-Layer Snow Effect Container -->
+    <div class="hero-snow-container">
+      <!-- Layer 1 - Foreground (Close, Large, Slow) -->
+      <div class="snow-layer snow-layer-1">
+        <div class="snowflake glow">❄</div>
+        <div class="snowflake">❅</div>
+        <div class="snowflake glow">❆</div>
+        <div class="snowflake">✻</div>
+        <div class="snowflake glow">❄</div>
+        <div class="snowflake">✼</div>
+      </div>
+
+      <!-- Layer 2 - Midground (Medium, Medium Speed) -->
+      <div class="snow-layer snow-layer-2">
+        <div class="snowflake">❅</div>
+        <div class="snowflake glow">❆</div>
+        <div class="snowflake">❄</div>
+        <div class="snowflake">✽</div>
+        <div class="snowflake glow">❅</div>
+        <div class="snowflake">✻</div>
+        <div class="snowflake">❆</div>
+        <div class="snowflake glow">❄</div>
+        <div class="snowflake">✼</div>
+      </div>
+
+      <!-- Layer 3 - Background (Far, Small, Fast) -->
+      <div class="snow-layer snow-layer-3">
+        <div class="snowflake">❄</div>
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+        <div class="snowflake">✻</div>
+        <div class="snowflake">❄</div>
+        <div class="snowflake">✽</div>
+        <div class="snowflake">❅</div>
+        <div class="snowflake">✼</div>
+        <div class="snowflake">❆</div>
+        <div class="snowflake">❄</div>
+        <div class="snowflake">✻</div>
+        <div class="snowflake">❅</div>
+      </div>
+    </div>
+
+    <div class="demo-container">
+      <div class="content">
+        <h1>❄ Advanced 3D Snow Effect ❄</h1>
+        <p class="subtitle">
+          Experience the magic of winter with our premium multi-layered snow
+          animation
+        </p>
+
+        <div class="features">
+          <div class="feature-card">
+            <div class="feature-icon">🌨️</div>
+            <div class="feature-title">3 Depth Layers</div>
+            <div class="feature-desc">
+              Foreground, midground, and background layers create realistic
+              depth perception
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">✨</div>
+            <div class="feature-title">Glowing Effects</div>
+            <div class="feature-desc">
+              Selected snowflakes pulse with beautiful glow animations
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">🌀</div>
+            <div class="feature-title">4 Animation Types</div>
+            <div class="feature-desc">
+              3D rotation, wind drift, slow fall, and twirl animations
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">❄️</div>
+            <div class="feature-title">Varied Snowflakes</div>
+            <div class="feature-desc">
+              Multiple snowflake characters (❄, ❅, ❆, ✻, ✼, ✽) for visual
+              variety
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">🎨</div>
+            <div class="feature-title">Blur & Opacity</div>
+            <div class="feature-desc">
+              Progressive blur and opacity create atmospheric depth
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <div class="feature-title">Optimized Performance</div>
+            <div class="feature-desc">
+              GPU-accelerated with will-change for smooth 60fps animation
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

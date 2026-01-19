@@ -1,0 +1,312 @@
+/* ============================================
+   MOBILE RESPONSIVE FIXES
+   ============================================ */
+
+/* --- General Mobile Optimizations --- */
+
+/* Tablet Devices (768px - 991px) */
+@media (max-width: 991px) {
+  /* Container padding adjustments */
+  .container {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  /* Section spacing */
+  .space {
+    padding-top: 60px;
+    padding-bottom: 60px;
+  }
+
+  /* Title adjustments */
+  .sec-title {
+    font-size: 32px !important;
+    line-height: 1.2 !important;
+  }
+
+  .sub-title {
+    font-size: 14px !important;
+  }
+
+  /* Story cards */
+  .story-card {
+    margin-bottom: 20px;
+  }
+
+  .story-card .box-title {
+    font-size: 28px !important;
+  }
+
+  .story-icon img {
+    width: 75px !important;
+    height: 75px !important;
+  }
+}
+
+/* Mobile Devices (below 768px) */
+@media (max-width: 767px) {
+  /* Container adjustments */
+  .container {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .th-container {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  /* Section spacing */
+  .space {
+    padding-top: 40px !important;
+    padding-bottom: 40px !important;
+  }
+
+  /* Row padding */
+  .row.px-3.px-lg-5 {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+
+  /* Title area */
+  .title-area {
+    margin-bottom: 30px;
+  }
+
+  .sec-title {
+    font-size: 26px !important;
+    line-height: 1.3 !important;
+    margin-bottom: 15px !important;
+  }
+
+  .sub-title {
+    font-size: 13px !important;
+    margin-bottom: 10px !important;
+  }
+
+  /* Story cards */
+  .story-card,
+  .story-card2 {
+    padding: 25px 20px !important;
+    margin-bottom: 15px;
+    min-height: auto !important;
+  }
+
+  .story-card .story-content {
+    padding: 20px !important;
+  }
+
+  .story-card .box-title,
+  .story-card2 .box-title {
+    font-size: 22px !important;
+    line-height: 1.3 !important;
+    margin-bottom: 15px !important;
+  }
+
+  .story-icon img {
+    width: 65px !important;
+    height: 65px !important;
+  }
+
+  .web-icon {
+    margin-bottom: 20px !important;
+  }
+
+  /* Buttons */
+  .th-btn {
+    padding: 10px 20px !important;
+    font-size: 14px !important;
+  }
+
+  /* Column spacing */
+  .gy-30 {
+    --bs-gutter-y: 20px;
+  }
+
+  /* Remove excessive margins */
+  .col-9 {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* Header button */
+  .header-button {
+    margin-top: 15px;
+  }
+}
+
+/* Extra Small Mobile Devices (below 576px) */
+@media (max-width: 575px) {
+  /* Container adjustments */
+  .container,
+  .th-container {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  /* Section spacing */
+  .space {
+    padding-top: 35px !important;
+    padding-bottom: 35px !important;
+  }
+
+  /* Row padding */
+  .row.px-3.px-lg-5 {
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+  }
+
+  /* Title area */
+  .sec-title {
+    font-size: 22px !important;
+    line-height: 1.3 !important;
+  }
+
+  .sub-title {
+    font-size: 12px !important;
+  }
+
+  /* Story cards */
+  .story-card,
+  .story-card2 {
+    padding: 20px 15px !important;
+  }
+
+  .story-card .story-content {
+    padding: 15px !important;
+  }
+
+  .story-card .box-title,
+  .story-card2 .box-title {
+    font-size: 20px !important;
+    line-height: 1.3 !important;
+  }
+
+  .story-icon img {
+    width: 55px !important;
+    height: 55px !important;
+  }
+
+  /* Buttons */
+  .th-btn {
+    padding: 8px 16px !important;
+    font-size: 13px !important;
+  }
+
+  .th-btn i {
+    font-size: 12px !important;
+  }
+
+  /* Column spacing */
+  .gy-30 {
+    --bs-gutter-y: 15px;
+  }
+}
+
+/* --- Specific Component Fixes --- */
+
+/* Home Services Section */
+@media (max-width: 767px) {
+  .counter-sec2 {
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
+
+  .history2-area {
+    margin-top: 20px;
+  }
+
+  .story-wrapp {
+    padding: 0;
+  }
+
+  /* Fix background images on mobile */
+  .story-bg {
+    background-size: cover !important;
+    background-position: center !important;
+  }
+}
+
+/* --- Fix Column Widths on Mobile --- */
+@media (max-width: 767px) {
+  .col-xxl-3,
+  .col-xxl-4,
+  .col-xxl-5,
+  .col-xl-4 {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+/* --- Fix Overflow Issues --- */
+@media (max-width: 767px) {
+  .overflow-hidden {
+    overflow-x: hidden !important;
+  }
+
+  body {
+    overflow-x: hidden;
+  }
+}
+
+/* --- Animation Adjustments for Mobile --- */
+/* Disable AOS animations on mobile to prevent hidden content issues */
+@media (max-width: 991px) {
+  /* Disable all AOS animations on tablets and mobile */
+  [data-aos] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+    pointer-events: auto !important;
+  }
+
+  /* Ensure AOS initialized elements are visible */
+  [data-aos].aos-animate {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  /* Remove all AOS-related transforms */
+  [data-aos][data-aos][data-aos-duration],
+  [data-aos][data-aos][data-aos-delay],
+  [data-aos][data-aos][data-aos-easing] {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  /* Disable moving animations */
+  .movingX {
+    animation: none !important;
+  }
+
+  /* Ensure all sections are visible */
+  .about-sec,
+  .service-sec,
+  .process-sec,
+  .team-sec,
+  .testimonial-sec,
+  .contact-sec,
+  .counter-sec2,
+  .history2-area {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+  }
+
+  /* Make sure all content is visible immediately */
+  * {
+    animation-play-state: running !important;
+  }
+}
+
+/* --- Fix Text Wrapping --- */
+@media (max-width: 575px) {
+  .box-title br {
+    display: none;
+  }
+
+  .dedication-title br {
+    display: none;
+  }
+}
