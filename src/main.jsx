@@ -4,7 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import App from "./App.jsx";
 import "./index.css";
-import "./styles/admin.css";
+// import "./styles/admin.css";
 
 
 ReactDOM.createRoot(document.getElementById("root")).render(
