@@ -2,25 +2,12 @@ import { useEffect, useState, lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 import AOS from "aos";
 import "aos/dist/aos.css";
-
 import Layout from "./components/Layout.jsx";
 import PageLoader from "./components/PageLoader.jsx";
 import ScrollToTop from "./components/ScrollToTop.jsx";
 import ContactModal from "./components/ContactModal.jsx";
 
-import AdminRoute from "./routes/AdminRoute.jsx";
-import AdminLayout from "./layouts/AdminLayout.jsx";
-
-/* =======================
-   ADMIN PAGES
-======================= */
-const AdminLogin = lazy(() => import("./pages/admin/Login.jsx"));
-const AdminDashboard = lazy(() => import("./pages/admin/Dashboard.jsx"));
-const AdminTeam = lazy(() => import("./pages/admin/Team.jsx"));
-
-/* =======================
-   WEBSITE PAGES
-======================= */
+// Website pages
 const HomeLayout = lazy(() => import("./pages/Home/HomeLayout.jsx"));
 const About = lazy(() => import("./pages/about/About.jsx"));
 const Services = lazy(() => import("./pages/Services.jsx"));
@@ -28,13 +15,9 @@ const ServiceDetails = lazy(() =>
   import("./pages/services/ServiceDetails.jsx")
 );
 const Portfolio = lazy(() => import("./pages/portfolio/Portfolio.jsx"));
-const ProjectDetail = lazy(() =>
-  import("./pages/portfolio/ProjectDetail.jsx")
-);
+const ProjectDetail = lazy(() => import("./pages/portfolio/ProjectDetail.jsx"));
 const Blogs = lazy(() => import("./pages/blogs/Blogs.jsx"));
-const BlogDetails = lazy(() =>
-  import("./pages/blogs/BlogDetails.jsx")
-);
+const BlogDetails = lazy(() => import("./pages/blogs/BlogDetails.jsx"));
 const Contact = lazy(() => import("./pages/contact/Contact.jsx"));
 const OurTeam = lazy(() => import("./pages/ourteam/OurTeam.jsx"));
 
@@ -43,7 +26,6 @@ function App() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-
     AOS.init({
       duration: 800,
       once: true,
@@ -55,23 +37,8 @@ function App() {
 
   return (
     <div>
-      {/* Scroll progress */}
-      <div className="scroll-top">
-        <svg
-          className="progress-circle svg-content"
-          width="100%"
-          height="100%"
-          viewBox="-1 -1 102 102"
-        >
-          <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
-        </svg>
-      </div>
-
       <Suspense fallback={<PageLoader />}>
         <Routes>
-          {/* =======================
-              PUBLIC WEBSITE
-          ======================= */}
           <Route
             path="/"
             element={<Layout setOpenContactModal={setOpenContactModal} />}
@@ -89,26 +56,6 @@ function App() {
             <Route path="blogs/:id" element={<BlogDetails />} />
             <Route path="contact" element={<Contact />} />
             <Route path="our-team" element={<OurTeam />} />
-          </Route>
-
-          {/* =======================
-              ADMIN LOGIN
-          ======================= */}
-          <Route path="/admin/login" element={<AdminLogin />} />
-
-          {/* =======================
-              ADMIN DASHBOARD
-          ======================= */}
-          <Route
-            path="/admin"
-            element={
-              <AdminRoute>
-                <AdminLayout />
-              </AdminRoute>
-            }
-          >
-            <Route path="dashboard" element={<AdminDashboard />} />
-            <Route path="team" element={<AdminTeam />} />
           </Route>
         </Routes>
       </Suspense>
