@@ -33,7 +33,7 @@ api/
 src/pages/admin/
 src/layouts/AdminLayout.jsx
 src/routes/
-src/services/
+
 src/styles/admin.css
 
 # ===============================
