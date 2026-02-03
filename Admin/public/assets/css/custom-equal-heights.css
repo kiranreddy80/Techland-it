@@ -1,0 +1,232 @@
+/* Equal Height Boxes for Process, Testimonials, Milestones, and What We Do sections */
+
+/* Our Process Section - Equal Heights */
+.process-item {
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+  min-height: 430px !important;
+}
+
+.process-item .process-icon {
+  flex-shrink: 0;
+}
+
+.process-item .process-content {
+  flex: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+}
+
+.process-item .process-text {
+  flex: 1 !important;
+  margin-bottom: 15px !important;
+}
+
+.process-item .box-number {
+  margin-top: auto !important;
+}
+
+/* Testimonials Section - Equal Heights */
+.testi-card9 {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 350px;
+}
+
+.testi-card9 .box-text {
+  flex: 1;
+}
+
+/* Milestones Section - Equal Heights */
+.service-item.style4 {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 450px;
+}
+
+.service-item.style4 .service-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.service-item.style4 .service-text {
+  flex: 1;
+}
+
+/* What We Do Section - Equal Heights */
+.service-item.sv-card7.sv-card8 {
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+  min-height: 450px !important;
+}
+
+.service-item.sv-card7.sv-card8 .service-img {
+  flex-shrink: 0 !important;
+  height: 200px !important;
+  overflow: hidden !important;
+}
+
+.service-item.sv-card7.sv-card8 .service-img img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+
+.service-item.sv-card7.sv-card8 .service-content {
+  flex: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  padding: 20px !important;
+}
+
+.service-item.sv-card7.sv-card8 .box-title {
+  flex-shrink: 0 !important;
+  margin-bottom: 15px !important;
+}
+
+.service-item.sv-card7.sv-card8 .service-text {
+  flex: 1 !important;
+  margin-bottom: 0 !important;
+}
+
+/* Mission, Vision, Goals - Equal Heights */
+.story-box {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 350px;
+}
+
+.story-box .story-box_text {
+  flex: 1;
+}
+
+/* Our Core Team Section - Equal Heights */
+.service-box.service-style-1.service-style9 {
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+  min-height: 450px !important;
+}
+
+.service-box.service-style-1.service-style9 .service-img {
+  flex-shrink: 0 !important;
+  height: 220px !important;
+  overflow: hidden !important;
+}
+
+.service-box.service-style-1.service-style9 .service-img img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+
+.service-box.service-style-1.service-style9 .service-content {
+  flex: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  padding: 25px !important;
+}
+
+.service-box.service-style-1.service-style9 .box-title {
+  flex-shrink: 0 !important;
+  margin-bottom: 15px !important;
+}
+
+.service-box.service-style-1.service-style9 .service-box_text {
+  flex: 1 !important;
+  margin-bottom: 0 !important;
+}
+
+/* Ensure Swiper slides maintain equal height */
+.swiper-slide {
+  height: auto;
+  display: flex;
+}
+
+.swiper-slide > div {
+  width: 100%;
+}
+
+/* --- Responsive Adjustments for Mobile --- */
+
+/* Tablet and below (991px and below) */
+@media (max-width: 991px) {
+  .process-item {
+    min-height: 380px !important;
+  }
+
+  .service-item.style4 {
+    min-height: 400px;
+  }
+
+  .service-item.sv-card7.sv-card8 {
+    min-height: 400px !important;
+  }
+
+  .service-box.service-style-1.service-style9 {
+    min-height: 400px !important;
+  }
+}
+
+/* Mobile devices (767px and below) */
+@media (max-width: 767px) {
+  .process-item {
+    min-height: auto !important;
+  }
+
+  .testi-card9 {
+    min-height: auto;
+  }
+
+  .service-item.style4 {
+    min-height: auto;
+  }
+
+  .service-item.sv-card7.sv-card8 {
+    min-height: auto !important;
+  }
+
+  .service-item.sv-card7.sv-card8 .service-img {
+    height: 180px !important;
+  }
+
+  .story-box {
+    min-height: auto;
+  }
+
+  .service-box.service-style-1.service-style9 {
+    min-height: auto !important;
+  }
+
+  .service-box.service-style-1.service-style9 .service-img {
+    height: 200px !important;
+  }
+
+  .service-box.service-style-1.service-style9 .service-content {
+    padding: 20px !important;
+  }
+}
+
+/* Extra small mobile devices (575px and below) */
+@media (max-width: 575px) {
+  .service-item.sv-card7.sv-card8 .service-img {
+    height: 160px !important;
+  }
+
+  .service-box.service-style-1.service-style9 .service-img {
+    height: 180px !important;
+  }
+
+  .service-box.service-style-1.service-style9 .service-content {
+    padding: 15px !important;
+  }
+}

@@ -1,34 +1,16 @@
 {
-  "name": "tech-land-final",
-  "private": true,
+  "name": "techland-fullstack",
   "version": "1.0.0",
-  "type": "module",
+  "description": "TechLand Fullstack Application",
+  "main": "index.js",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^7.1.0",
-    "@fortawesome/free-solid-svg-icons": "^7.1.0",
-    "@fortawesome/react-fontawesome": "^3.1.1",
-    "aos": "^2.3.4",
-    "axios": "^1.13.2",
-    "isotope-layout": "^3.0.6",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-fontawesome": "^1.7.1",
-    "react-helmet-async": "^2.0.4",
-    "react-lazy-load-image-component": "^1.6.3",
-    "react-masonry-css": "^1.0.16",
-    "react-router-dom": "^6.20.0",
-    "react-toastify": "^11.0.5",
-    "swiper": "^12.0.3"
+    "install-all": "npm install && cd backend && npm install && cd ../frontend && npm install && cd ../Admin && npm install",
+    "backend": "npm run dev --prefix backend",
+    "frontend": "npm run dev --prefix frontend",
+    "admin": "npm run dev --prefix Admin",
+    "dev": "concurrently \"npm run backend\" \"npm run frontend\" \"npm run admin\""
   },
   "devDependencies": {
-    "@types/react": "^18.2.43",
-    "@types/react-dom": "^18.2.17",
-    "@vitejs/plugin-react": "^4.2.1",
-    "vite": "^5.0.8"
+    "concurrently": "^8.2.2"
   }
 }

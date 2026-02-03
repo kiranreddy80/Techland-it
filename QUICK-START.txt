@@ -1,0 +1,81 @@
+╔══════════════════════════════════════════════════════════════════╗
+║                   TECHLAND QUICK START GUIDE                     ║
+╚══════════════════════════════════════════════════════════════════╝
+
+📌 PROBLEM: "Failed to load" errors in Admin Panel after laptop restart
+
+✅ SOLUTION: Backend server must be running!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🚀 EASIEST WAY TO START EVERYTHING:
+
+   Double-click this file:
+   📁 c:\techland\techland\start-dev.bat
+
+   This will automatically start:
+   ✓ Backend (port 5000)
+   ✓ Frontend (port 3000)  
+   ✓ Admin Panel (port 3001)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🔧 MANUAL START (if you prefer):
+
+   1. Backend (START THIS FIRST!)
+      cd c:\techland\techland\backend
+      npm run dev
+      
+      ⏳ Wait for: "MongoDB Connected" + "Server running on port 5000"
+
+   2. Frontend
+      cd c:\techland\techland\frontend
+      npm run dev
+
+   3. Admin Panel
+      cd c:\techland\techland\Admin
+      npm run dev
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🌐 ACCESS URLS:
+
+   Backend API:  http://localhost:5000
+   Frontend:     http://localhost:3000
+   Admin Panel:  http://localhost:3001
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🆕 NEW FEATURES ADDED:
+
+   ✓ Connection Status Monitor
+     - Shows warning banner when backend is disconnected
+     - Auto-checks connection every 30 seconds
+     - "Retry Connection" button
+
+   ✓ Better Error Messages
+     - Clear toast notifications
+     - Tells you exactly what to do
+     - Console logs for debugging
+
+   ✓ Startup Script
+     - One-click to start all services
+     - Opens separate terminal windows
+     - Shows all service URLs
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+❓ TROUBLESHOOTING:
+
+   Problem: MongoDB connection error
+   Fix: net start MongoDB
+
+   Problem: Port already in use
+   Fix: netstat -ano | findstr :5000
+        taskkill /PID <process_id> /F
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+💡 TIP: Keep the backend terminal window open while working!
+
+╚══════════════════════════════════════════════════════════════════╝
