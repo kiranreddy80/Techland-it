@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import api from "../../services/api";
-// Import the toast library and its CSS
-import { toast, ToastContainer } from "react-toastify";
+// Import the toast library
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const HomeContactUs = () => {
@@ -109,7 +109,7 @@ const HomeContactUs = () => {
         name: formData.name,
         phone: formData.number,
         email: formData.email,
-        subject: formData.subject,
+        subject: formData.subject || "Home Page Quote Inquiry",
         message: formData.message,
       };
 
@@ -129,10 +129,10 @@ const HomeContactUs = () => {
       setErrors({});
     } catch (error) {
       console.error("Error submitting form:", error);
-      // Show error toast
-      toast.error(
-        "Failed to submit form. Please check your connection and try again."
-      );
+      const errorMessage =
+        error.response?.data?.message ||
+        "Failed to submit form. Please check your connection and try again.";
+      toast.error(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -200,18 +200,6 @@ const HomeContactUs = () => {
           min-height: 120px;
         }
       `}</style>
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
-      />
 
       <div
         className="history-sec1 overflow-hidden"
@@ -470,7 +458,7 @@ const HomeContactUs = () => {
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 export default HomeContactUs;

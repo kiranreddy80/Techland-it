@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import api from "../services/api";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./ContactModal.css";
 
@@ -236,7 +236,7 @@ const ContactModal = ({ openModal, setOpenModal }) => {
       const dataToSend = {
         name: formData.name,
         email: formData.email,
-        phone: formData.phone || "Not provided",
+        phone: formData.phone || "",
         subject: "Website Inquiry (Modal)",
         message: formData.message,
       };
@@ -253,9 +253,10 @@ const ContactModal = ({ openModal, setOpenModal }) => {
       setErrors({});
     } catch (error) {
       console.error("Error submitting form:", error);
-      toast.error(
-        "Failed to submit form. Please check your connection and try again."
-      );
+      const errorMessage =
+        error.response?.data?.message ||
+        "Failed to submit form. Please check your connection and try again.";
+      toast.error(errorMessage);
     } finally {
       setIsSubmitting(false);
     }
@@ -273,19 +274,6 @@ const ContactModal = ({ openModal, setOpenModal }) => {
 
   return (
     <>
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
-      />
-
       <div className="contact-modal-overlay" onClick={handleClose}>
         <div
           className="contact-modal-container"

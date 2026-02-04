@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import api from "../../services/api";
 import SEO from "../../components/SEO";
 import { getSEO } from "../../config/seoConfig";
-// Import the toast library and its CSS
-import { toast, ToastContainer } from "react-toastify";
+// Import the toast library
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";
 
@@ -97,10 +97,10 @@ const Contact = () => {
       setErrors({});
     } catch (error) {
       console.error("Error submitting form:", error);
-      // Show error toast
-      toast.error(
-        "Failed to submit form. Please check your connection and try again."
-      );
+      const errorMessage =
+        error.response?.data?.message ||
+        "Failed to submit form. Please check your connection and try again.";
+      toast.error(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -121,18 +121,6 @@ const Contact = () => {
         description={seo.description}
         keywords={seo.keywords}
         canonical={seo.canonical}
-      />
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
       />
 
       {/* --- Breadcrumb Section - Content UPDATED --- */}
