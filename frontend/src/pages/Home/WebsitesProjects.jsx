@@ -97,7 +97,7 @@ const WebsitesProjects = () => {
   return (
     <section
       className="bg-smoke space"
-      style={{ backgroundImage: "url(assets/img/bg/team_bg_1.png)" }}
+      style={{ backgroundImage: "url(/assets/img/bg/team_bg_1.png)" }}
     >
       <div className="container">
         <div className="row">
@@ -119,7 +119,7 @@ const WebsitesProjects = () => {
 
                 <div className="blog-shape text-lg-start text-center">
                   <img
-                    src="assets/img/shape/blog-present.png"
+                    src="/assets/img/shape/blog-present.png"
                     alt="decorative shape"
                     loading="lazy"
                   />
