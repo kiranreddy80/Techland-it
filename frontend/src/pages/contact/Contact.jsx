@@ -108,6 +108,8 @@ const Contact = () => {
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && e.target.tagName !== "TEXTAREA") {
+      e.preventDefault();
+      e.stopPropagation();
       handleSubmit(e);
     }
   };
