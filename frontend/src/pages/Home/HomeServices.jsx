@@ -50,7 +50,7 @@ const HomeServices = () => {
                     <div className="dedication-content">
                       <div className="dedication-icon-wrapper">
                         <img
-                          src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@main/assets/Gem%20stone/3D/gem_stone_3d.png"
+                          src="/assets/img/icon/gem_stone_3d.png"
                           alt="Quality Dedication"
                         />
                       </div>
