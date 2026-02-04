@@ -243,14 +243,15 @@ const ContactModal = ({ openModal, setOpenModal }) => {
 
       await api.post("/contact", dataToSend);
 
+      // Reset form immediately
+      setFormData({ name: "", email: "", phone: "", message: "" });
+      setErrors({});
+
       toast.success("Message sent successfully! We'll get back to you soon.");
 
       setTimeout(() => {
         handleClose();
       }, 2000);
-
-      setFormData({ name: "", email: "", phone: "", message: "" });
-      setErrors({});
     } catch (error) {
       console.error("Error submitting form:", error);
       const errorMessage =

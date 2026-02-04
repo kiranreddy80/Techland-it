@@ -89,12 +89,12 @@ const Contact = () => {
         subject: "General Inquiry (Contact Page)"
       });
 
-      // Show success toast
-      toast.success("Message sent successfully! We'll get back to you soon.");
-
-      // Reset form on success - UPDATED to match new state keys
+      // Reset form on success immediately
       setFormData({ firstName: "", phone: "", email: "", message: "" });
       setErrors({});
+
+      // Show success toast
+      toast.success("Message sent successfully! We'll get back to you soon.");
     } catch (error) {
       console.error("Error submitting form:", error);
       const errorMessage =

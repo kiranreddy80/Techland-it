@@ -115,10 +115,7 @@ const HomeContactUs = () => {
 
       await api.post("/contact", dataToSend);
 
-      // Show success toast
-      toast.success("Message sent successfully! We'll get back to you soon.");
-
-      // Reset form on success
+      // Reset form immediately on success
       setFormData({
         name: "",
         email: "",
@@ -127,6 +124,9 @@ const HomeContactUs = () => {
         number: "",
       });
       setErrors({});
+
+      // Show success toast
+      toast.success("Message sent successfully! We'll get back to you soon.");
     } catch (error) {
       console.error("Error submitting form:", error);
       const errorMessage =
