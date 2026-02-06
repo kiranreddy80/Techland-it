@@ -1,0 +1,515 @@
+/* ========================================
+   PROFESSIONAL SEASONAL HERO BANNER
+   ======================================== */
+
+/* Hero Container */
+.hero-festival-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.hero-festival {
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh;
+  height: 100vh;
+  background: #000;
+}
+
+/* Background Image Styling */
+.festival-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 1;
+}
+
+/* Professional Single Dark Overlay - No Multiple Colors */
+.festival-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 0, 0, 0.75) 0%,
+    rgba(0, 0, 0, 0.6) 50%,
+    rgba(0, 0, 0, 0.75) 100%
+  );
+  z-index: 2;
+}
+
+/* Slide Container */
+.festival-slide {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Content Positioning */
+.festival-content {
+  position: relative;
+  z-index: 10;
+  padding: 40px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Festival Badge */
+.festival-badge {
+  display: inline-block;
+  padding: 14px 35px;
+  border-radius: 50px;
+  margin-bottom: 35px;
+  font-weight: 700;
+  font-size: 17px;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(15px);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  animation: badgePulse 3s ease-in-out infinite;
+}
+
+@keyframes badgePulse {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 15px 50px rgba(255, 255, 255, 0.2);
+  }
+}
+
+/* Festival Title - Professional Typography */
+.festival-title {
+  font-size: 4.5rem;
+  font-weight: 800;
+  line-height: 1.2;
+  color: #ffffff;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5), 0 4px 20px rgba(0, 0, 0, 0.3);
+  margin-bottom: 30px;
+  letter-spacing: -1px;
+}
+
+.festival-title-word {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Festival Description - Clean & Readable */
+.festival-description {
+  font-size: 1.4rem;
+  color: #f5f5f5;
+  text-shadow: 0 2px 15px rgba(0, 0, 0, 0.7);
+  max-width: 900px;
+  margin: 0 auto 50px;
+  line-height: 1.8;
+  font-weight: 400;
+  letter-spacing: 0.3px;
+}
+
+.festival-desc-word {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* CTA Buttons - Professional Design */
+.festival-buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 40px;
+}
+
+.festival-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px 45px;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 50px;
+  text-decoration: none;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
+}
+
+.festival-btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+  border: none;
+}
+
+.festival-btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
+  color: #fff;
+}
+
+.festival-btn-outline {
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  color: #fff;
+  backdrop-filter: blur(10px);
+}
+
+.festival-btn-outline:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.9);
+  transform: translateY(-3px);
+  box-shadow: 0 15px 40px rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+/* Animated Background Particles */
+.festival-particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 3;
+  overflow: hidden;
+}
+
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  animation: particleFloat 15s linear infinite;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+@keyframes particleFloat {
+  0% {
+    transform: translateY(0) translateX(0) scale(1);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100vh) translateX(50px) scale(0.5);
+    opacity: 0;
+  }
+}
+
+/* Navigation Controls */
+.festival-navigation {
+  position: absolute;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.festival-arrow {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  color: #fff;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.festival-arrow:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.6);
+  transform: scale(1.1);
+}
+
+/* Pagination Bullets */
+.festival-pagination {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.festival-pagination .swiper-pagination-bullet {
+  width: 12px;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.4);
+  opacity: 1;
+  margin: 0;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  border-radius: 50%;
+}
+
+.festival-pagination .swiper-pagination-bullet-active {
+  width: 40px;
+  border-radius: 6px;
+  background: #fff;
+}
+
+.festival-pagination .swiper-pagination-bullet .festival-name {
+  display: none;
+  position: absolute;
+  bottom: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.9);
+  color: #fff;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  white-space: nowrap;
+  backdrop-filter: blur(10px);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.festival-pagination .swiper-pagination-bullet:hover .festival-name {
+  display: block;
+}
+
+/* Scroll Indicator */
+.scroll-indicator {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 15;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  opacity: 0.8;
+}
+
+.scroll-mouse {
+  width: 30px;
+  height: 50px;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  border-radius: 20px;
+  position: relative;
+  backdrop-filter: blur(5px);
+}
+
+.scroll-wheel {
+  width: 4px;
+  height: 10px;
+  background: #fff;
+  border-radius: 2px;
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: scrollWheel 2s ease-in-out infinite;
+}
+
+@keyframes scrollWheel {
+  0%,
+  100% {
+    top: 8px;
+    opacity: 1;
+  }
+  50% {
+    top: 28px;
+    opacity: 0.3;
+  }
+}
+
+.scroll-text {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* Swiper Customization */
+.festival-hero-slider {
+  width: 100%;
+  height: 100vh;
+}
+
+.festival-hero-slider .swiper-slide {
+  opacity: 0 !important;
+  transition: opacity 1.5s ease-in-out;
+}
+
+.festival-hero-slider .swiper-slide-active {
+  opacity: 1 !important;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .festival-title {
+    font-size: 3.5rem;
+  }
+
+  .festival-description {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .festival-title {
+    font-size: 3rem;
+  }
+
+  .festival-description {
+    font-size: 1.15rem;
+    padding: 0 20px;
+  }
+
+  .festival-badge {
+    font-size: 15px;
+    padding: 12px 28px;
+  }
+
+  .festival-btn {
+    padding: 16px 35px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .festival-title {
+    font-size: 2.5rem;
+  }
+
+  .festival-description {
+    font-size: 1.05rem;
+  }
+
+  .festival-badge {
+    font-size: 14px;
+    padding: 10px 24px;
+  }
+
+  .festival-buttons {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .festival-btn {
+    width: 100%;
+    max-width: 320px;
+    padding: 15px 30px;
+  }
+
+  .festival-navigation {
+    bottom: 30px;
+    gap: 20px;
+  }
+
+  .festival-arrow {
+    width: 45px;
+    height: 45px;
+    font-size: 16px;
+  }
+
+  .scroll-indicator {
+    display: none;
+  }
+}
+
+@media (max-width: 576px) {
+  .hero-festival {
+    min-height: 100vh;
+  }
+
+  .festival-title {
+    font-size: 2rem;
+  }
+
+  .festival-description {
+    font-size: 0.95rem;
+  }
+
+  .festival-badge {
+    font-size: 12px;
+    padding: 8px 20px;
+    letter-spacing: 1.5px;
+  }
+
+  .festival-content {
+    padding: 20px 15px;
+  }
+}
+
+/* Performance Optimization */
+@media (prefers-reduced-motion: reduce) {
+  .festival-badge,
+  .particle,
+  .festival-title-word,
+  .festival-desc-word,
+  .festival-btn,
+  .scroll-wheel {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* Loading State */
+.festival-bg::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  z-index: -1;
+}

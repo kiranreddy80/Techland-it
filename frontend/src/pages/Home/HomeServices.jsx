@@ -106,7 +106,7 @@ const HomeServices = () => {
                     className="story-card story-card2 story-bg"
                     style={{
                       backgroundImage: `url('/assets/img/home-services/web-development-bg.png')`,
-                    }}
+                    }}  
                   >
                     <div className="story-content">
                       <h3 className="box-title sail-regular">
@@ -182,7 +182,7 @@ const HomeServices = () => {
                           Read More{" "}
                           <i className="fa-regular fa-arrow-right"></i>
                         </Link>
-                      </div>
+                      </div> 
                     </div>
                   </div>
                 </div>
