@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import api from "../../services/api";
+import config from "../../config";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper modules
@@ -9,73 +11,32 @@ import "swiper/css";
 import "swiper/css/pagination";
 
 const HomeTestimonials = () => {
-  // Create a data array for testimonials to make the component cleaner and more maintainable
-  const testimonialsData = [
-    {
-      id: 1,
-      review: "5.0",
-      text: "Techland IT Solutions gave our boutique a stunning online presence. The website and app look amazing!",
-      author: "Boutique",
-      designation: "Client",
-      img: "assets/img/testimonial/testi_9_1.jpg",
-    },
-    {
-      id: 2,
-      review: "5.0",
-      text: "The e-commerce platform they created for Meat O is top-notch. Fast and reliable service.",
-      author: "Meat O",
-      designation: "Client",
-      img: "assets/img/testimonial/testi_9_2.jpg",
-    },
-    {
-      id: 3,
-      review: "5.0",
-      text: "Techland IT Solutions truly understood our vision for Temple City. Our new site is a game-changer!",
-      author: "Temple City",
-      designation: "Client",
-      img: "assets/img/testimonial/testi_9_1.jpg",
-    },
-    {
-      id: 4,
-      review: "5.0",
-      text: "టెక్‌ల్యాండ్ IT సొల్యూషన్స్ మా న్యూస్ ప్లాట్‌ఫారమ్‌ను సులభంగా ఉపయోగపడేలా మరియు డైనామిక్‌గా మార్చింది. అద్భుతమైన పని!",
-      author: "V News",
-      designation: "Client",
-      img: "assets/img/testimonial/testi_9_2.jpg",
-    },
-    {
-      id: 5,
-      review: "5.0",
-      text: "టెక్‌ల్యాండ్ IT సొల్యూషన్స్‌తో పని చేయడం చాలా సంతోషంగా ఉంది. వారు మా ఆలోచనలను అద్భుతంగా వాస్తవంగా మార్చారు.",
-      author: "Nudeal",
-      designation: "Client",
-      img: "assets/img/testimonial/testi_9_1.jpg",
-    },
-    {
-      id: 6,
-      review: "5.0",
-      text: "The team at Techland delivered creative and effective solutions for our site. We couldn't be happier!",
-      author: "Sapid",
-      designation: "Client",
-      img: "assets/img/testimonial/testi_9_2.jpg",
-    },
-    {
-      id: 7,
-      review: "5.0",
-      text: "Techland IT Solutions designed our website with great attention to detail and professionalism. Very satisfied!",
-      author: "Work Oasis",
-      designation: "Client",
-      img: "assets/img/testimonial/testi_9_1.jpg",
-    },
-    {
-      id: 8,
-      review: "5.0",
-      text: "The Trust Labs team is thankful for Techland's exceptional service. Our website looks fantastic and works flawlessly!",
-      author: "Trust Labs",
-      designation: "Client",
-      img: "assets/img/testimonial/testi_9_2.jpg",
-    },
-  ];
+  const [testimonialsData, setTestimonialsData] = useState([]);
+
+  useEffect(() => {
+    const fetchTestimonials = async () => {
+      try {
+        const { data } = await api.get("/testimonials");
+        const backendUrl = config.ASSETS_URL;
+
+        const formattedData = data
+          .filter((t) => t.isActive)
+          .map((t) => ({
+            id: t._id,
+            review: t.rating ? t.rating.toFixed(1) : "5.0",
+            text: t.message,
+            author: t.name,
+            designation: t.designation,
+            img: t.image.startsWith("http") ? t.image : `${backendUrl}${t.image}`,
+          }));
+        setTestimonialsData(formattedData);
+      } catch (error) {
+        console.error("Error fetching testimonials:", error);
+      }
+    };
+
+    fetchTestimonials();
+  }, []);
 
   return (
     <section className="testi-area-11 overflow-hidden" id="testi-sec">
@@ -168,12 +129,13 @@ const HomeTestimonials = () => {
                         <div className="box-content">
                           <div className="box-img">
                             <img
-                              src="/assets/img/3d-icons/user-male-circle.png"
+                              src={testimonial.img || "/assets/img/3d-icons/user-male-circle.png"}
                               alt={testimonial.author}
                               style={{
                                 width: "60px",
                                 height: "60px",
                                 objectFit: "contain",
+                                borderRadius: "50%",
                               }}
                               loading="lazy"
                             />
@@ -195,8 +157,9 @@ const HomeTestimonials = () => {
           </div>
         </div>
       </div>
-    </section>
+    </section> 
   );
 };
 
 export default HomeTestimonials;
+  
