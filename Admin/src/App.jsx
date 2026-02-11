@@ -15,6 +15,7 @@ const AdminTeam = lazy(() => import("./pages/Team.jsx"));
 const AdminProjects = lazy(() => import("./pages/Projects.jsx"));
 const AdminClients = lazy(() => import("./pages/Clients.jsx"));
 const AdminActivities = lazy(() => import("./pages/Activities.jsx"));
+const AdminTestimonials = lazy(() => import("./pages/Testimonials.jsx"));
 const AdminContacts = lazy(() => import("./pages/Contacts.jsx"));
 const AdminMedia = lazy(() => import("./pages/Media.jsx"));
 
@@ -51,6 +52,7 @@ function App() {
                         <Route path="activities" element={<AdminActivities />} />
                         <Route path="projects" element={<AdminProjects />} />
                         <Route path="clients" element={<AdminClients />} />
+                        <Route path="testimonials" element={<AdminTestimonials />} />
                         <Route path="contacts" element={<AdminContacts />} />
                         <Route path="media" element={<AdminMedia />} />
                     </Route>

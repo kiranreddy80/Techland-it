@@ -24,6 +24,7 @@ export default function AdminLayout() {
     { path: "/admin/clients", label: "Clients", icon: "🤝" },
     { path: "/admin/team", label: "Team", icon: "👥" },
     { path: "/admin/activities", label: "Activities", icon: "🎈" },
+    { path: "/admin/testimonials", label: "Testimonials", icon: "⭐" },
     { path: "/admin/contacts", label: "Messages", icon: "📩" },
     { path: "/admin/media", label: "Media Library", icon: "📁" },
   ];
