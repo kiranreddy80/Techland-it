@@ -10,6 +10,7 @@ export default function AdminClients() {
     const [preview, setPreview] = useState("");
     const backendUrl = config.ASSETS_URL;
     const [loading, setLoading] = useState(false);
+    const [editingId, setEditingId] = useState(null);
 
     const fetchClients = async () => {
         try {
@@ -25,9 +26,16 @@ export default function AdminClients() {
         fetchClients();
     }, []);
 
-    const handleOpenModal = () => {
-        setFormData({ name: "", industry: "", logo: null });
-        setPreview("");
+    const handleOpenModal = (client = null) => {
+        if (client) {
+            setFormData({ name: client.name, industry: client.industry, logo: null });
+            setPreview(client.logo.startsWith("http") ? client.logo : `${backendUrl}${client.logo}`);
+            setEditingId(client._id);
+        } else {
+            setFormData({ name: "", industry: "", logo: null });
+            setPreview("");
+            setEditingId(null);
+        }
         setIsModalOpen(true);
     };
 
@@ -39,19 +47,26 @@ export default function AdminClients() {
         data.append("name", formData.name);
         data.append("industry", formData.industry);
         if (formData.logo) {
-            data.append("logo", formData.logo);
+            data.append("image", formData.logo); // backend expects 'image' in multer
         }
 
         try {
-            await api.post("/clients", data, {
-                headers: { "Content-Type": "multipart/form-data" },
-            });
-            toast.success("Client added successfully");
+            if (editingId) {
+                await api.put(`/clients/${editingId}`, data, {
+                    headers: { "Content-Type": "multipart/form-data" },
+                });
+                toast.success("Client updated successfully");
+            } else {
+                await api.post("/clients", data, {
+                    headers: { "Content-Type": "multipart/form-data" },
+                });
+                toast.success("Client added successfully");
+            }
             fetchClients();
             setIsModalOpen(false);
         } catch (error) {
-            console.error("Error adding client:", error);
-            toast.error(error.response?.data?.message || "Failed to add client");
+            console.error("Error saving client:", error);
+            toast.error(error.response?.data?.message || `Failed to ${editingId ? 'update' : 'add'} client`);
         } finally {
             setLoading(false);
         }
@@ -88,7 +103,7 @@ export default function AdminClients() {
                     <h1 className="admin-title">Clients & Partners</h1>
                     <p className="admin-subtitle">Manage the companies and brands you work with.</p>
                 </div>
-                <button className="quick-action-btn primary" style={{ width: "auto" }} onClick={handleOpenModal}>
+                <button className="quick-action-btn primary" style={{ width: "auto" }} onClick={() => handleOpenModal()}>
                     + Add New Client
                 </button>
             </div>
@@ -136,7 +151,8 @@ export default function AdminClients() {
                                     </td>
                                     <td>
                                         <div style={{ display: "flex", gap: "8px", justifyContent: "flex-end" }}>
-                                            <button className="delete-btn-icon" onClick={() => handleDelete(client._id)}>🗑️</button>
+                                            <button className="delete-btn-icon" onClick={() => handleOpenModal(client)} title="Edit">✏️</button>
+                                            <button className="delete-btn-icon" onClick={() => handleDelete(client._id)} title="Delete">🗑️</button>
                                         </div>
                                     </td>
                                 </tr>
@@ -155,7 +171,7 @@ export default function AdminClients() {
                 <div className="modal-overlay" onClick={(e) => { if (e.target === e.currentTarget) setIsModalOpen(false) }}>
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h2>Add New Client</h2>
+                            <h2>{editingId ? "Edit Client" : "Add New Client"}</h2>
                             <button className="close-btn" onClick={() => setIsModalOpen(false)}>&times;</button>
                         </div>
                         <form onSubmit={handleSubmit}>
@@ -201,7 +217,7 @@ export default function AdminClients() {
                                             setPreview(URL.createObjectURL(file));
                                         }
                                     }}
-                                    required
+                                    required={!editingId}
                                 />
                             </div>
 
@@ -212,12 +228,13 @@ export default function AdminClients() {
                             )}
 
                             <button type="submit" className="btn-primary" disabled={loading}>
-                                {loading ? "Adding..." : "Add Client"}
+                                {loading ? (editingId ? "Updating..." : "Adding...") : (editingId ? "Update Client" : "Add Client")}
                             </button>
                         </form>
                     </div>
                 </div>
             )}
+
         </div>
     );
 }

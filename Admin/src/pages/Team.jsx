@@ -6,10 +6,10 @@ import config from "../config";
 export default function AdminTeam() {
   const [team, setTeam] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  // We only support creating new members for now based on backend controller, edit is not implemented in backend yet.
   const [formData, setFormData] = useState({ name: "", role: "", photo: null });
   const [preview, setPreview] = useState("");
   const backendUrl = config.ASSETS_URL;
+  const [editingId, setEditingId] = useState(null);
 
   const [loading, setLoading] = useState(false);
 
@@ -27,17 +27,23 @@ export default function AdminTeam() {
     fetchTeam();
   }, []);
 
-  const handleOpenModal = () => {
-    setFormData({ name: "", role: "", photo: null });
-    setPreview("");
+  const handleOpenModal = (member = null) => {
+    if (member) {
+      setFormData({ name: member.name, role: member.role, photo: null });
+      setPreview(member.image.startsWith("http") ? member.image : `${backendUrl}${member.image}`);
+      setEditingId(member._id);
+    } else {
+      setFormData({ name: "", role: "", photo: null });
+      setPreview("");
+      setEditingId(null);
+    }
     setIsModalOpen(true);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true); // START LOADING
+    setLoading(true);
 
-    // Create FormData for file upload
     const data = new FormData();
     data.append("name", formData.name);
     data.append("role", formData.role);
@@ -46,18 +52,25 @@ export default function AdminTeam() {
     }
 
     try {
-      await api.post("/team", data, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
-      toast.success("Team member added successfully");
+      if (editingId) {
+        await api.put(`/team/${editingId}`, data, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
+        toast.success("Team member updated successfully");
+      } else {
+        await api.post("/team", data, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
+        toast.success("Team member added successfully");
+      }
       fetchTeam();
       setIsModalOpen(false);
     } catch (error) {
-      console.error("Error adding member:", error);
-      const errorMessage = error.response?.data?.message || "Failed to add team member";
+      console.error("Error saving member:", error);
+      const errorMessage = error.response?.data?.message || `Failed to ${editingId ? 'update' : 'add'} team member`;
       toast.error(errorMessage);
     } finally {
-      setLoading(false); // END LOADING
+      setLoading(false);
     }
   };
 
@@ -92,7 +105,7 @@ export default function AdminTeam() {
           <h1 className="admin-title">Team Members</h1>
           <p className="admin-subtitle">Manage your team structure and roles.</p>
         </div>
-        <button className="quick-action-btn primary" style={{ width: "auto" }} onClick={handleOpenModal}>
+        <button className="quick-action-btn primary" style={{ width: "auto" }} onClick={() => handleOpenModal()}>
           + Add New Member
         </button>
       </div>
@@ -135,8 +148,8 @@ export default function AdminTeam() {
                   </td>
                   <td>
                     <div style={{ display: "flex", gap: "8px", justifyContent: "flex-end" }}>
-                      {/* Edit not fully supported by backend yet, simplifying to just delete for now or could implement update later */}
-                      <button className="delete-btn-icon" onClick={() => handleDelete(member._id)}>🗑️</button>
+                      <button className="delete-btn-icon" onClick={() => handleOpenModal(member)} title="Edit">✏️</button>
+                      <button className="delete-btn-icon" onClick={() => handleDelete(member._id)} title="Delete">🗑️</button>
                     </div>
                   </td>
                 </tr>
@@ -156,7 +169,7 @@ export default function AdminTeam() {
         <div className="modal-overlay" onClick={(e) => { if (e.target === e.currentTarget) setIsModalOpen(false) }}>
           <div className="modal-content">
             <div className="modal-header">
-              <h2>Add New Member</h2>
+              <h2>{editingId ? "Edit Member" : "Add New Member"}</h2>
               <button className="close-btn" onClick={() => setIsModalOpen(false)}>&times;</button>
             </div>
             <form onSubmit={handleSubmit}>
@@ -202,7 +215,7 @@ export default function AdminTeam() {
                       setPreview(URL.createObjectURL(file));
                     }
                   }}
-                  required
+                  required={!editingId}
                 />
               </div>
 
@@ -213,12 +226,13 @@ export default function AdminTeam() {
               )}
 
               <button type="submit" className="btn-primary" disabled={loading}>
-                {loading ? "Adding..." : "Add Member"}
+                {loading ? (editingId ? "Updating..." : "Adding...") : (editingId ? "Update Member" : "Add Member")}
               </button>
             </form>
           </div>
         </div>
       )}
+
     </div>
   );
 }

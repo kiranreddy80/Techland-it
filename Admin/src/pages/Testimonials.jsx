@@ -10,6 +10,7 @@ export default function AdminTestimonials() {
     const [preview, setPreview] = useState("");
     const backendUrl = config.ASSETS_URL;
     const [loading, setLoading] = useState(false);
+    const [editingId, setEditingId] = useState(null);
 
     const fetchTestimonials = async () => {
         try {
@@ -25,16 +26,29 @@ export default function AdminTestimonials() {
         fetchTestimonials();
     }, []);
 
-    const handleOpenModal = () => {
-        setFormData({ name: "", designation: "", message: "", rating: 5, image: null });
-        setPreview("");
+    const handleOpenModal = (testimonial = null) => {
+        if (testimonial) {
+            setFormData({
+                name: testimonial.name,
+                designation: testimonial.designation,
+                message: testimonial.message,
+                rating: testimonial.rating,
+                image: null
+            });
+            setPreview(testimonial.image.startsWith("http") ? testimonial.image : `${backendUrl}${testimonial.image}`);
+            setEditingId(testimonial._id);
+        } else {
+            setFormData({ name: "", designation: "", message: "", rating: 5, image: null });
+            setPreview("");
+            setEditingId(null);
+        }
         setIsModalOpen(true);
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!formData.image) {
+        if (!editingId && !formData.image) {
             toast.error("Please upload an image");
             return;
         }
@@ -51,15 +65,22 @@ export default function AdminTestimonials() {
         }
 
         try {
-            await api.post("/testimonials", data, {
-                headers: { "Content-Type": "multipart/form-data" },
-            });
-            toast.success("Testimonial added successfully");
+            if (editingId) {
+                await api.put(`/testimonials/${editingId}`, data, {
+                    headers: { "Content-Type": "multipart/form-data" },
+                });
+                toast.success("Testimonial updated successfully");
+            } else {
+                await api.post("/testimonials", data, {
+                    headers: { "Content-Type": "multipart/form-data" },
+                });
+                toast.success("Testimonial added successfully");
+            }
             fetchTestimonials();
             setIsModalOpen(false);
         } catch (error) {
-            console.error("Error adding testimonial:", error);
-            toast.error(error.response?.data?.message || "Failed to add testimonial");
+            console.error("Error saving testimonial:", error);
+            toast.error(error.response?.data?.message || `Failed to ${editingId ? 'update' : 'add'} testimonial`);
         } finally {
             setLoading(false);
         }
@@ -96,7 +117,7 @@ export default function AdminTestimonials() {
                     <h1 className="admin-title">Testimonials</h1>
                     <p className="admin-subtitle">Manage client feedback and reviews.</p>
                 </div>
-                <button className="quick-action-btn primary" style={{ width: "auto" }} onClick={handleOpenModal}>
+                <button className="quick-action-btn primary" style={{ width: "auto" }} onClick={() => handleOpenModal()}>
                     + Add New Testimonial
                 </button>
             </div>
@@ -148,7 +169,8 @@ export default function AdminTestimonials() {
                                     </td>
                                     <td>
                                         <div style={{ display: "flex", gap: "8px", justifyContent: "flex-end" }}>
-                                            <button className="delete-btn-icon" onClick={() => handleDelete(testimonial._id)}>🗑️</button>
+                                            <button className="delete-btn-icon" onClick={() => handleOpenModal(testimonial)} title="Edit">✏️</button>
+                                            <button className="delete-btn-icon" onClick={() => handleDelete(testimonial._id)} title="Delete">🗑️</button>
                                         </div>
                                     </td>
                                 </tr>
@@ -167,7 +189,7 @@ export default function AdminTestimonials() {
                 <div className="modal-overlay" onClick={(e) => { if (e.target === e.currentTarget) setIsModalOpen(false) }}>
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h2>Add New Testimonial</h2>
+                            <h2>{editingId ? "Edit Testimonial" : "Add New Testimonial"}</h2>
                             <button className="close-btn" onClick={() => setIsModalOpen(false)}>&times;</button>
                         </div>
                         <form onSubmit={handleSubmit}>
@@ -236,6 +258,7 @@ export default function AdminTestimonials() {
                                             setPreview(URL.createObjectURL(file));
                                         }
                                     }}
+                                    required={!editingId}
                                 />
                             </div>
 
@@ -246,12 +269,13 @@ export default function AdminTestimonials() {
                             )}
 
                             <button type="submit" className="btn-primary" disabled={loading}>
-                                {loading ? "Adding..." : "Add Testimonial"}
+                                {loading ? (editingId ? "Updating..." : "Adding...") : (editingId ? "Update Testimonial" : "Add Testimonial")}
                             </button>
                         </form>
                     </div>
                 </div>
             )}
+
         </div>
     );
 }

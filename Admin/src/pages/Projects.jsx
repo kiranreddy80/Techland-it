@@ -16,6 +16,7 @@ export default function AdminProjects() {
     const [preview, setPreview] = useState("");
     const backendUrl = config.ASSETS_URL;
     const [loading, setLoading] = useState(false);
+    const [editingId, setEditingId] = useState(null);
 
     const fetchProjects = async () => {
         try {
@@ -31,9 +32,22 @@ export default function AdminProjects() {
         fetchProjects();
     }, []);
 
-    const handleOpenModal = () => {
-        setFormData({ title: "", category: "", client: "", status: "Completed", photo: null });
-        setPreview("");
+    const handleOpenModal = (project = null) => {
+        if (project) {
+            setFormData({
+                title: project.title,
+                category: project.category,
+                client: project.client,
+                status: project.status,
+                photo: null
+            });
+            setPreview(project.image.startsWith("http") ? project.image : `${backendUrl}${project.image}`);
+            setEditingId(project._id);
+        } else {
+            setFormData({ title: "", category: "", client: "", status: "Completed", photo: null });
+            setPreview("");
+            setEditingId(null);
+        }
         setIsModalOpen(true);
     };
 
@@ -51,15 +65,22 @@ export default function AdminProjects() {
         }
 
         try {
-            await api.post("/projects", data, {
-                headers: { "Content-Type": "multipart/form-data" },
-            });
-            toast.success("Project added successfully");
+            if (editingId) {
+                await api.put(`/projects/${editingId}`, data, {
+                    headers: { "Content-Type": "multipart/form-data" },
+                });
+                toast.success("Project updated successfully");
+            } else {
+                await api.post("/projects", data, {
+                    headers: { "Content-Type": "multipart/form-data" },
+                });
+                toast.success("Project added successfully");
+            }
             fetchProjects();
             setIsModalOpen(false);
         } catch (error) {
-            console.error("Error adding project:", error);
-            const errorMessage = error.response?.data?.message || "Failed to add project";
+            console.error("Error saving project:", error);
+            const errorMessage = error.response?.data?.message || `Failed to ${editingId ? 'update' : 'add'} project`;
             toast.error(errorMessage);
         } finally {
             setLoading(false);
@@ -108,7 +129,7 @@ export default function AdminProjects() {
                     <h1 className="admin-title">Projects Portfolio</h1>
                     <p className="admin-subtitle">Showcase your best work and manage project statuses.</p>
                 </div>
-                <button className="quick-action-btn primary" style={{ width: "auto" }} onClick={handleOpenModal}>
+                <button className="quick-action-btn primary" style={{ width: "auto" }} onClick={() => handleOpenModal()}>
                     + Add New Project
                 </button>
             </div>
@@ -172,7 +193,8 @@ export default function AdminProjects() {
                                     </td>
                                     <td>
                                         <div style={{ display: "flex", gap: "8px", justifyContent: "flex-end" }}>
-                                            <button className="delete-btn-icon" onClick={() => handleDelete(project._id)}>🗑️</button>
+                                            <button className="delete-btn-icon" onClick={() => handleOpenModal(project)} title="Edit">✏️</button>
+                                            <button className="delete-btn-icon" onClick={() => handleDelete(project._id)} title="Delete">🗑️</button>
                                         </div>
                                     </td>
                                 </tr>
@@ -191,7 +213,7 @@ export default function AdminProjects() {
                 <div className="modal-overlay" onClick={(e) => { if (e.target === e.currentTarget) setIsModalOpen(false) }}>
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h2>Add New Project</h2>
+                            <h2>{editingId ? "Edit Project" : "Add New Project"}</h2>
                             <button className="close-btn" onClick={() => setIsModalOpen(false)}>&times;</button>
                         </div>
                         <form onSubmit={handleSubmit}>
@@ -260,7 +282,7 @@ export default function AdminProjects() {
                                             setPreview(URL.createObjectURL(file));
                                         }
                                     }}
-                                    required
+                                    required={!editingId}
                                 />
                             </div>
 
@@ -271,12 +293,13 @@ export default function AdminProjects() {
                             )}
 
                             <button type="submit" className="btn-primary" disabled={loading}>
-                                {loading ? "Creating..." : "Create Project"}
+                                {loading ? (editingId ? "Updating..." : "Creating...") : (editingId ? "Update Project" : "Create Project")}
                             </button>
                         </form>
                     </div>
                 </div>
             )}
+
         </div>
     );
 }

@@ -10,6 +10,7 @@ export default function AdminActivities() {
     const [preview, setPreview] = useState("");
     const backendUrl = config.ASSETS_URL;
     const [loading, setLoading] = useState(false);
+    const [editingId, setEditingId] = useState(null);
 
     const fetchActivities = async () => {
         try {
@@ -25,9 +26,16 @@ export default function AdminActivities() {
         fetchActivities();
     }, []);
 
-    const handleOpenModal = () => {
-        setFormData({ title: "", description: "", date: "", photo: null });
-        setPreview("");
+    const handleOpenModal = (activity = null) => {
+        if (activity) {
+            setFormData({ title: activity.title, description: activity.description, date: activity.date, photo: null });
+            setPreview(activity.image.startsWith("http") ? activity.image : `${backendUrl}${activity.image}`);
+            setEditingId(activity._id);
+        } else {
+            setFormData({ title: "", description: "", date: "", photo: null });
+            setPreview("");
+            setEditingId(null);
+        }
         setIsModalOpen(true);
     };
 
@@ -44,15 +52,22 @@ export default function AdminActivities() {
         }
 
         try {
-            await api.post("/activities", data, {
-                headers: { "Content-Type": "multipart/form-data" },
-            });
-            toast.success("Activity added successfully");
+            if (editingId) {
+                await api.put(`/activities/${editingId}`, data, {
+                    headers: { "Content-Type": "multipart/form-data" },
+                });
+                toast.success("Activity updated successfully");
+            } else {
+                await api.post("/activities", data, {
+                    headers: { "Content-Type": "multipart/form-data" },
+                });
+                toast.success("Activity added successfully");
+            }
             fetchActivities();
             setIsModalOpen(false);
         } catch (error) {
-            console.error("Error adding activity:", error);
-            const errorMessage = error.response?.data?.message || "Failed to add activity";
+            console.error("Error saving activity:", error);
+            const errorMessage = error.response?.data?.message || `Failed to ${editingId ? 'update' : 'add'} activity`;
             toast.error(errorMessage);
         } finally {
             setLoading(false);
@@ -90,7 +105,7 @@ export default function AdminActivities() {
                     <h1 className="admin-title">Our Activities</h1>
                     <p className="admin-subtitle">Update and manage team events and activities.</p>
                 </div>
-                <button className="quick-action-btn primary" style={{ width: "auto" }} onClick={handleOpenModal}>
+                <button className="quick-action-btn primary" style={{ width: "auto" }} onClick={() => handleOpenModal()}>
                     + Add New Activity
                 </button>
             </div>
@@ -134,7 +149,8 @@ export default function AdminActivities() {
                                     </td>
                                     <td>
                                         <div style={{ display: "flex", gap: "8px", justifyContent: "flex-end" }}>
-                                            <button className="delete-btn-icon" onClick={() => handleDelete(activity._id)}>🗑️</button>
+                                            <button className="delete-btn-icon" onClick={() => handleOpenModal(activity)} title="Edit">✏️</button>
+                                            <button className="delete-btn-icon" onClick={() => handleDelete(activity._id)} title="Delete">🗑️</button>
                                         </div>
                                     </td>
                                 </tr>
@@ -153,7 +169,7 @@ export default function AdminActivities() {
                 <div className="modal-overlay" onClick={(e) => { if (e.target === e.currentTarget) setIsModalOpen(false) }}>
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h2>Add New Activity</h2>
+                            <h2>{editingId ? "Edit Activity" : "Add New Activity"}</h2>
                             <button className="close-btn" onClick={() => setIsModalOpen(false)}>&times;</button>
                         </div>
                         <form onSubmit={handleSubmit}>
@@ -209,7 +225,7 @@ export default function AdminActivities() {
                                             setPreview(URL.createObjectURL(file));
                                         }
                                     }}
-                                    required
+                                    required={!editingId}
                                 />
                             </div>
 
@@ -220,12 +236,13 @@ export default function AdminActivities() {
                             )}
 
                             <button type="submit" className="btn-primary" disabled={loading}>
-                                {loading ? "Adding..." : "Add Activity"}
+                                {loading ? (editingId ? "Updating..." : "Adding...") : (editingId ? "Update Activity" : "Add Activity")}
                             </button>
                         </form>
                     </div>
                 </div>
             )}
+
         </div>
     );
 }
