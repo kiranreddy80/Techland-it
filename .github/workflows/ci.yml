@@ -26,7 +26,7 @@ jobs:
           protocol: ftps
           port: 21
           local-dir: ./admin/dist/
-          server-dir: /public_html/admin/
+          server-dir: /public_html/
 
   build-frontend:
     runs-on: ubuntu-latest
