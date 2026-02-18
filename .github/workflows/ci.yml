@@ -20,7 +20,7 @@ jobs:
       - name: Upload Admin via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.0
         with:
-          server: ${{ secrets.FTP_SERVER_ADMIN }}   # ftp.peru-mandrill-728053.hostingersite.com
+          server: ${{ secrets.FTP_SERVER_ADMIN }}  
           username: ${{ secrets.FTP_USERNAME_ADMIN }}
           password: ${{ secrets.FTP_PASSWORD_ADMIN }}
           protocol: ftp
@@ -43,7 +43,7 @@ jobs:
       - name: Upload Frontend via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.0
         with:
-          server: ${{ secrets.FTP_SERVER_FRONTEND }}   # ftp.peru-mandrill-728053.hostingersite.com
+          server: ${{ secrets.FTP_SERVER_FRONTEND }}  
           username: ${{ secrets.FTP_USERNAME_FRONTEND }}
           password: ${{ secrets.FTP_PASSWORD_FRONTEND }}
           protocol: ftp
