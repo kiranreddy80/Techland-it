@@ -20,7 +20,7 @@ jobs:
       - name: Upload Admin via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.0
         with:
-          server: ${{ secrets.FTP_SERVER_ADMIN }}
+          server: ${{ secrets.FTP_SERVER_ADMIN }}   # ftp.peru-mandrill-728053.hostingersite.com
           username: ${{ secrets.FTP_USERNAME_ADMIN }}
           password: ${{ secrets.FTP_PASSWORD_ADMIN }}
           protocol: ftp
@@ -34,19 +34,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Build Frontend
+      - name: Build frontend
         run: |
-          cd Frontend
+          cd frontend
           npm install
           npm run build
 
-      - name: Upload Frontend via FTP
+      - name: Upload frontend via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.0
         with:
-          server: ${{ secrets.FTP_SERVER_FRONTEND }}
+          server: ${{ secrets.FTP_SERVER_FRONTEND }}   # ftp.peru-mandrill-728053.hostingersite.com
           username: ${{ secrets.FTP_USERNAME_FRONTEND }}
           password: ${{ secrets.FTP_PASSWORD_FRONTEND }}
           protocol: ftp
           port: 21
-          local-dir: ./Frontend/dist/
+          local-dir: ./frontend/dist/
           server-dir: /public_html/
