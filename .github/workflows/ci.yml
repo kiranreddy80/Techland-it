@@ -13,7 +13,7 @@ jobs:
 
       - name: Build Admin
         run: |
-          cd admin
+          cd Techland-it/Admin
           npm install
           npm run build
 
@@ -26,7 +26,7 @@ jobs:
           protocol: ftp
           port: 21
           local-dir: .Techland-it/Admin/dist/
-          server-dir: /public_html/
+          server-dir: /public_html/admin
 
   build-frontend:
     runs-on: ubuntu-latest
@@ -36,7 +36,7 @@ jobs:
 
       - name: Build Frontend
         run: |
-          cd frontend
+          cd Techland-it/Frontend
           npm install
           npm run build
 
