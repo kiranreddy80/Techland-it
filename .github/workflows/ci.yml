@@ -10,6 +10,10 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          submodules: false
+
+
 
       - name: Build Admin
         run: |
