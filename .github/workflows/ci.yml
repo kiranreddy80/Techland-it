@@ -13,7 +13,7 @@ jobs:
 
       - name: Build Admin
         run: |
-          cd Techland-it/Admin
+          cd Admin
           npm install
           npm run build
 
@@ -36,7 +36,7 @@ jobs:
 
       - name: Build Frontend
         run: |
-          cd Techland-it/Frontend
+          cd Frontend
           npm install
           npm run build
 
