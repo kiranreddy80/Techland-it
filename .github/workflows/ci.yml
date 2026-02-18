@@ -34,9 +34,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Build Frontend
+      - name: Build frontend
         run: |
-          cd Frontend
+          cd frontend
           npm install
           npm run build
 
@@ -48,5 +48,5 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD_FRONTEND }}
           protocol: ftps
           port: 21
-          local-dir: ./Frontend/dist/
+          local-dir: ./frontend/dist/
           server-dir: /public_html/
