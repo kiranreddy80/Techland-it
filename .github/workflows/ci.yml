@@ -34,13 +34,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Build frontend
+      - name: Build Frontend
         run: |
-          cd frontend
+          cd Frontend
           npm install
           npm run build
 
-      - name: Upload frontend via FTPS
+      - name: Upload Frontend via FTPS
         uses: SamKirkland/FTP-Deploy-Action@v4.3.0
         with:
           server: ${{ secrets.FTP_SERVER_FRONTEND }}   # ftp.peru-mandrill-728053.hostingersite.com
@@ -48,5 +48,5 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD_FRONTEND }}
           protocol: ftps
           port: 21
-          local-dir: ./frontend/dist/
+          local-dir: ./Frontend/dist/
           server-dir: /public_html/
