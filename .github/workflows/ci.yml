@@ -24,7 +24,7 @@ jobs:
           username: ${{ secrets.FTP_USERNAME_ADMIN }}
           password: ${{ secrets.FTP_PASSWORD_ADMIN }}
           protocol: ftps
-          port: 21
+          port: 22
           local-dir: ./admin/dist/
           server-dir: /public_html/admin/
 
@@ -47,6 +47,6 @@ jobs:
           username: ${{ secrets.FTP_USERNAME_FRONTEND }}
           password: ${{ secrets.FTP_PASSWORD_FRONTEND }}
           protocol: ftps
-          port: 21
+          port: 22
           local-dir: ./frontend/dist/
           server-dir: /public_html/
