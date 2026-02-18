@@ -24,7 +24,7 @@ jobs:
           username: ${{ secrets.FTP_USERNAME_ADMIN }}
           password: ${{ secrets.FTP_PASSWORD_ADMIN }}
           local-dir: ./admin/dist/
-          server-dir: /public_html/admin
+          server-dir: /public_html/admin/
 
   build-frontend:
     runs-on: ubuntu-latest
@@ -45,4 +45,4 @@ jobs:
           username: ${{ secrets.FTP_USERNAME_FRONTEND }}
           password: ${{ secrets.FTP_PASSWORD_FRONTEND }}
           local-dir: ./frontend/dist/
-          server-dir: /public_html
+          server-dir: /public_html/
