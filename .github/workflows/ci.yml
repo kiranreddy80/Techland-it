@@ -25,8 +25,8 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD_ADMIN }}
           protocol: ftp
           port: 21
-          local-dir: ./Techland-it/Admin/dist/
-          server-dir: /public_html/admin/
+          local-dir: .Techland-it/Admin/dist/
+          server-dir: /public_html/
 
   build-frontend:
     runs-on: ubuntu-latest
@@ -48,5 +48,5 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD_FRONTEND }}
           protocol: ftp
           port: 21
-          local-dir: ./Techland-it/Frontend/dist/*
+          local-dir: .Techland-it/frontend/dist/
           server-dir: /public_html/
