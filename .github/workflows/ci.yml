@@ -17,7 +17,7 @@ jobs:
           npm install
           npm run build
 
-      - name: Upload Admin via FTP
+      - name: Upload Admin via FTPS
         uses: SamKirkland/FTP-Deploy-Action@v4.3.0
         with:
           server: ${{ secrets.FTP_SERVER_ADMIN }}   # ftp.peru-mandrill-728053.hostingersite.com
@@ -40,7 +40,7 @@ jobs:
           npm install
           npm run build
 
-      - name: Upload frontend via FTP
+      - name: Upload frontend via FTPS
         uses: SamKirkland/FTP-Deploy-Action@v4.3.0
         with:
           server: ${{ secrets.FTP_SERVER_FRONTEND }}   # ftp.peru-mandrill-728053.hostingersite.com
