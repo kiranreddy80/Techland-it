@@ -23,7 +23,7 @@ jobs:
           server: ${{ secrets.FTP_SERVER_ADMIN }}   # ftp.peru-mandrill-728053.hostingersite.com
           username: ${{ secrets.FTP_USERNAME_ADMIN }}
           password: ${{ secrets.FTP_PASSWORD_ADMIN }}
-          protocol: ftp
+          protocol: ftps
           port: 21
           local-dir: ./Admin/dist/
           server-dir: /public_html/admin/
@@ -46,7 +46,7 @@ jobs:
           server: ${{ secrets.FTP_SERVER_FRONTEND }}   # ftp.peru-mandrill-728053.hostingersite.com
           username: ${{ secrets.FTP_USERNAME_FRONTEND }}
           password: ${{ secrets.FTP_PASSWORD_FRONTEND }}
-          protocol: ftp
+          protocol: ftps
           port: 21
           local-dir: ./frontend/dist/
           server-dir: /public_html/
