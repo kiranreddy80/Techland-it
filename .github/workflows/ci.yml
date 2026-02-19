@@ -45,12 +45,13 @@ jobs:
           npm install
           npm run build
 
-      - name: Upload Frontend via SFTP
+      - name: Upload Frontend via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.0
         with:
           server: ${{ secrets.FTP_SERVER_FRONTEND }}  
           username: ${{ secrets.FTP_USERNAME_FRONTEND }}
           password: ${{ secrets.FTP_PASSWORD_FRONTEND }}
-          port: 22
+          protocol: ftp
+          port: 21
           local-dir: ./frontend/dist/
           server-dir: /
