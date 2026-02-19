@@ -29,7 +29,7 @@ jobs:
           protocol: ftp
           port: 21
           local-dir: ./Admin/dist/
-          server-dir: public_html/
+          server-dir: /
   build-frontend:
     runs-on: ubuntu-latest
     steps:
@@ -54,4 +54,4 @@ jobs:
           protocol: ftp
           port: 21
           local-dir: ./frontend/dist/
-          server-dir: public_html/
+          server-dir: /
