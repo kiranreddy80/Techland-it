@@ -20,13 +20,13 @@ jobs:
           npm install
           npm run build
 
-      - name: Upload Admin via FTP
+      - name: Upload Admin via FTPS
         uses: SamKirkland/FTP-Deploy-Action@v4.3.0
         with:
           server: ${{ secrets.FTP_SERVER_ADMIN }}  
           username: ${{ secrets.FTP_USERNAME_ADMIN }}
           password: ${{ secrets.FTP_PASSWORD_ADMIN }}
-          protocol: ftp
+          protocol: ftps
           port: 21
           local-dir: ./Admin/dist/
           server-dir: /
